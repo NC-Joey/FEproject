@@ -30,7 +30,6 @@ const Dashboard = () => {
       })
       .then(response=> {
         setTop3(response.data)
-        console.log(response.data)
       })
       .catch(error => console.log(error))
     }
@@ -45,7 +44,6 @@ const Dashboard = () => {
     })
     .then(response => {
       setAll(response.data)
-      console.log(response.data)
 
     })
     .catch(error => console.log(error))
@@ -106,14 +104,14 @@ const Dashboard = () => {
               <div className='data-block px-3 py-4 rounded-2'>
                 <button type='button' className='btn btn-primary rounded-3 py-3 px-1 data-title w-100' data-bs-toggle="modal" data-bs-target="#topThreeModal">Top three students</button>
 
-                <div class="modal fade" id="topThreeModal" tabindex="-1" aria-labelledby="topThreeModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="topThreeModalLabel">Top three students</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div className="modal fade" id="topThreeModal" tabIndex="-1" aria-labelledby="topThreeModalLabel" aria-hidden="true">
+                  <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h1 className="modal-title fs-5" id="topThreeModalLabel">Top three students</h1>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                      <div class="modal-body row px-4">
+                      <div className="modal-body row px-4">
                         <div className='col-8'>
                         <p className='fw-medium text-primary'>Name</p>
                         {top3.map(student => <p key={student.id}>{student.name}</p>)}
@@ -133,12 +131,14 @@ const Dashboard = () => {
 
           <section className='table-responsive px-3 px-md-4 px-xl-5 mb-5'>
             <table className='table table-bordered border-success text-nowrap'>
-              <thead className='bg-primary text-white'>
-                <td className='px-2 py-2 fw-medium'>Name</td>
-                <td className='px-2 py-2 fw-medium'>Email</td>
-                <td className='px-2 py-2 fw-medium'>Phone Number</td>
-                <td className='px-2 py-2 fw-medium'>Position</td>
-                <td className='px-2 py-2 fw-medium'>Total Score</td>
+              <thead>
+                <tr className='bg-primary text-white'>
+                  <th className='px-2 py-2 fw-medium'>Name</th>
+                  <th className='px-2 py-2 fw-medium'>Email</th>
+                  <th className='px-2 py-2 fw-medium'>Phone Number</th>
+                  <th className='px-2 py-2 fw-medium'>Position</th>
+                  <th className='px-2 py-2 fw-medium'>Total Score</th>
+                </tr>
               </thead>
 
               <tbody>

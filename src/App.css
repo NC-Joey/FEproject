@@ -29,7 +29,7 @@ header h3 {
     height: 100dvh;
 }
 
-.register-form-div, .login-form-div {
+.register-form-div, .login-form-div, .page404 {
     background: url(/src/assets/images/spec.png);
     background-size: cover;
     background-repeat: no-repeat;
@@ -103,6 +103,42 @@ input {
     border-color: #98ed21 !important;
 }
 
+@keyframes infinite-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading {
+    display: none;
+    animation-name: infinite-rotate;
+    animation-iteration-count: infinite;
+    animation-duration: 2s;
+}
+
+
+.page404 h1 {
+    font-size: 6rem;
+}
+
+.page404 p {
+    font-size: 2rem
+}
+
+@keyframes fade {
+    0% {opacity: 0.8;}
+    50% {opacity: 0;}
+}
+
+.animate-fade {
+    opacity: 0.8;
+    animation: fade 5s ease-in-out none infinite;
+}
+
 @media (max-width: 1280px) {
     
     .dashboard-menu-div {
@@ -132,6 +168,7 @@ input {
     .data-icon {
         font-size: 1.8rem;
     }
+
 }
 
 @media (max-width: 1080px) {
@@ -150,6 +187,14 @@ input {
     form {
         width: 90%;
         font-size: medium;
+    }
+
+    .page404 h1 {
+        font-size: 5rem;
+    }
+    
+    .page404 p {
+        font-size: 2rem
     }
 }
 
@@ -210,6 +255,14 @@ input {
     
     .mobile {
         display: block !important;
+    }
+
+    .page404 h1 {
+        font-size: 5rem;
+    }
+    
+    .page404 p {
+        font-size: 1.2rem
     }
 }
 

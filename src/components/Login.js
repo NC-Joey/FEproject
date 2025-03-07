@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import logImg from '../assets/images/welcome.png'
 import axios from 'axios'
@@ -6,14 +6,14 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import TokenContext from '../myContext/TokenContext'
 import DashContext from '../myContext/DashContext'
-import { AiFillEye } from "react-icons/ai"
-import { AiFillEyeInvisible } from "react-icons/ai"
+import { AiFillEye, AiFillEyeInvisible, AiOutlineLoading3Quarters } from "react-icons/ai"
 
 const Login = () => {
 
   const {setToken} = useContext(TokenContext)
   const {setDash} = useContext(DashContext)
   const navigate = useNavigate()
+  const btnTxt = useRef()
 
   const [formData, setData] = useState({
     email: "",
@@ -33,14 +33,21 @@ const Login = () => {
 
     event.preventDefault()
 
+    const loader = document.getElementById("loader")
+    loader.style.display = "inline-block"
+    btnTxt.current.style.display = "none"
+
     axios.post('https://cyrilyoruba.juadebgabriel.com/yorubalearning/api/admin_login', formData)
       .then(response => {
         if (response.data.status === "failed") { //check if login details are correct
           toast.error('Invalid email or password')
+          loader.style.display = "none"
+          btnTxt.current.style.display = "inline-block"
         } else {
           setToken(response.data.token) //save user token
           const dashboardUrl = "https://cyrilyoruba.juadebgabriel.com/yorubalearning/api/admin/admin_dashboardapi";
           toast.success('Successfully logged in!')
+          
           axios
             .get(dashboardUrl, {
               headers: {
@@ -53,6 +60,8 @@ const Login = () => {
             .then(()=> navigate('/dashboard'))
             .catch((err) => console.log(err));
 
+            loader.style.display = "none"
+            btnTxt.current.style.display = "inline-block"
           }
         })
         .catch(error => console.log("ERROR", error)) 
@@ -87,7 +96,7 @@ const Login = () => {
                 </div>
                 </div>
 
-                <button type='submit' className='btn btn-primary px-3 py-2 border-0 rounded-3 text-white'>Login</button>
+                <button type='submit' className='btn btn-primary px-3 py-2 border-0 rounded-3 text-white'><AiOutlineLoading3Quarters className='loading' id='loader'/><span ref={btnTxt}>Login</span></button>
               </form>
 
               <span className='fw-semibold text-primary ms-3 fit-content'><Link to={'/register'} className='text-decoration-none'>Register here</Link></span>

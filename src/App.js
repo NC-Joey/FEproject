@@ -3,6 +3,7 @@ import './App.css';
 import Register from './components/Register';
 import Login from './components/Login'
 import Dashboard from './components/Dashboard'
+import PageNotFound from './components/PageNotFound';
 import { Routes, Route } from 'react-router-dom';
 import TokenContext from './myContext/TokenContext';
 import DashContext from './myContext/DashContext';
@@ -23,6 +24,7 @@ function App() {
           <Route path='/' element={<Login />} />
           <Route path='/register' element={<Register />}/>
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/*' element={<PageNotFound />} />
         </Routes>
       </DashContext.Provider>
       </TokenContext.Provider>

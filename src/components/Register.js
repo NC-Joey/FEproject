@@ -1,15 +1,15 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import regImg from '../assets/images/sigimg.png'
 import { useState } from 'react'
 import axios from 'axios'
 import { toast } from 'sonner'
-import { AiFillEye } from "react-icons/ai"
-import { AiFillEyeInvisible } from "react-icons/ai"
+import { AiFillEye, AiFillEyeInvisible, AiOutlineLoading3Quarters } from "react-icons/ai"
 
 const Register = () => {
 
   const navigate = useNavigate()
+  const btnTxt = useRef()
 
   const [formData, setData] = useState({
     name: "",
@@ -35,18 +35,19 @@ const Register = () => {
 
     event.preventDefault()
 
+    const loader = document.getElementById("loader")
+    loader.style.display = "inline-block"
+    btnTxt.current.style.display = "none"
+
     if (formData.password.length < 6) { //check password length
       toast.warning("The password must be at least 6 characters.")
+      loader.style.display = "none"
+      btnTxt.current.style.display = "inline-block"
     } else if (formData.password !== formData.password_confirmation) { //check if password and confirm password match
       toast.error("The passwords do not match.")
+      loader.style.display = "none"
+      btnTxt.current.style.display = "inline-block"
     } else {
-      const promise = () => new Promise((resolve) => setTimeout(() => resolve({ name: 'Sonner' }), 1000)); //for loading toast
-      
-      toast.promise(promise, {
-        loading: 'Please wait...',
-        success: 'User successfully registered',
-        error: 'Error',
-      })
 
       axios.post('https://cyrilyoruba.juadebgabriel.com/yorubalearning/api/register_admin', formData)
       .then(response => {
@@ -54,9 +55,14 @@ const Register = () => {
         if (response.data.status === 'failed') { //check if email is taken
           return toast.warning(response.data.message.email[0])
         }
+        loader.style.display = "none"
+        btnTxt.current.style.display = "inline-block"
+        toast.success("User succesfully registered")
         navigate('/')
       })
       .catch(error => console.log("ERROR", error)) 
+
+      
     }
   }
   
@@ -94,7 +100,7 @@ const Register = () => {
                 <input type={passType} id='cpassword' name='password_confirmation' placeholder='Confirm Password' value={formData.password_confirmation} onChange={handleForm} className='px-3 py-2 border-0 rounded-3 w-100' required/>
                 </div>
 
-                <button type='submit' className='btn btn-primary px-3 py-2 border-0 rounded-3 text-white'>Create account</button>
+                <button type='submit' className='btn btn-primary px-3 py-2 border-0 rounded-3 text-white'><AiOutlineLoading3Quarters className='loading' id='loader'/><span ref={btnTxt}>Create account</span></button>
               </form>
 
               <span className='fw-semibold text-primary ps-3 fit-content'><Link to={'/'} className='text-decoration-none'>Login here</Link></span>
